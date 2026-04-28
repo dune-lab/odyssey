@@ -1,15 +1,8 @@
 import { fn } from '@enxoval/types';
 import { Journey, JourneyRecord, JourneyStep, JourneyStatus } from '../model/journey';
 import { JourneyWireOut } from '../wire/out/journey';
-import { StudentInput } from '../model/student';
-import { StartJourneyWireIn } from '../wire/in/journey';
 import { JourneyDbWire } from '../db/wire/journey';
 import { asUUID } from '@enxoval/types';
-
-export const fromWireIn = fn(StartJourneyWireIn, StudentInput, (wire) => ({
-  name: wire.name,
-  email: wire.email,
-}));
 
 export const toWireOut = fn(Journey, JourneyWireOut, (journey) => ({
   id: journey.id,
