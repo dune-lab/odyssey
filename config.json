@@ -1,0 +1,14 @@
+{
+  "kafka_topics": {
+    "journeyInitiated": { "topic": "JOURNEY_INITIATED" },
+    "diagnosticTriggered": { "topic": "DIAGNOSTIC_TRIGGERED" },
+    "diagnosticCompleted": { "topic": "DIAGNOSTIC_COMPLETED" },
+    "analysisStarted": { "topic": "ANALYSIS_STARTED" },
+    "analysisFinished": { "topic": "ANALYSIS_FINISHED" },
+    "curriculumGenerated": { "topic": "CURRICULUM_GENERATED" },
+    "contentDispatched": { "topic": "CONTENT_DISPATCHED" },
+    "studentEngagementReceived": { "topic": "STUDENT_ENGAGEMENT_RECEIVED" },
+    "progressMilestoneReached": { "topic": "PROGRESS_MILESTONE_REACHED" }
+  },
+  "feature_flags": {}
+}
