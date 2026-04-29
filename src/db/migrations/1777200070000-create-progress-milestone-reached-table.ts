@@ -1,4 +1,4 @@
-import { Migration, sql, MigrationRunner } from '../@enxoval/db';
+import { Migration, sql, MigrationRunner } from '@enxoval/db';
 
 export class CreateProgressMilestoneReachedTable1777200070000 extends Migration {
   name = 'CreateProgressMilestoneReachedTable1777200070000';

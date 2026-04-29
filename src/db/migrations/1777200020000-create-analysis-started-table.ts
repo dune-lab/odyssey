@@ -1,4 +1,4 @@
-import { Migration, sql, MigrationRunner } from '../@enxoval/db';
+import { Migration, sql, MigrationRunner } from '@enxoval/db';
 
 export class CreateAnalysisStartedTable1777200020000 extends Migration {
   name = 'CreateAnalysisStartedTable1777200020000';

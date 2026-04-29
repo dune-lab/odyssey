@@ -1,4 +1,4 @@
-import { Migration, sql, MigrationRunner } from '../@enxoval/db';
+import { Migration, sql, MigrationRunner } from '@enxoval/db';
 
 export class CreateDiagnosticCompletedTable1777200010000 extends Migration {
   name = 'CreateDiagnosticCompletedTable1777200010000';

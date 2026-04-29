@@ -1,8 +1,10 @@
-import { Migration, sql } from '@enxoval/db';
+import { Migration, MigrationRunner, sql } from '@enxoval/db';
 
-export class CreateJourneys001 implements Migration {
-  async up(): Promise<void> {
-    await sql(`
+export class CreateJourneys001 extends Migration {
+  name = '001-create-journeys';
+
+  async up(runner: MigrationRunner): Promise<void> {
+    await sql(runner, `
       CREATE TABLE IF NOT EXISTS journeys (
         id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
         student_id UUID NOT NULL,
@@ -13,7 +15,7 @@ export class CreateJourneys001 implements Migration {
     `);
   }
 
-  async down(): Promise<void> {
-    await sql(`DROP TABLE IF EXISTS journeys`);
+  async down(runner: MigrationRunner): Promise<void> {
+    await sql(runner, `DROP TABLE IF EXISTS journeys`);
   }
 }

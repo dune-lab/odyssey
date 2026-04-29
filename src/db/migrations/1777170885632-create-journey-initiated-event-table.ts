@@ -1,4 +1,4 @@
-import { Migration, sql, MigrationRunner } from '../@enxoval/db';
+import { Migration, sql, MigrationRunner } from '@enxoval/db';
 
 export class CreateJourneyInitiatedEventTable1777170885632 extends Migration {
   name = 'CreateJourneyInitiatedEventTable1777170885632';

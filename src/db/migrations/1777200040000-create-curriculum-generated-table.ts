@@ -1,4 +1,4 @@
-import { Migration, sql, MigrationRunner } from '../@enxoval/db';
+import { Migration, sql, MigrationRunner } from '@enxoval/db';
 
 export class CreateCurriculumGeneratedTable1777200040000 extends Migration {
   name = 'CreateCurriculumGeneratedTable1777200040000';

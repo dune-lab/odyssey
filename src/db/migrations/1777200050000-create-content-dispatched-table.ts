@@ -1,4 +1,4 @@
-import { Migration, sql, MigrationRunner } from '../@enxoval/db';
+import { Migration, sql, MigrationRunner } from '@enxoval/db';
 
 export class CreateContentDispatchedTable1777200050000 extends Migration {
   name = 'CreateContentDispatchedTable1777200050000';
