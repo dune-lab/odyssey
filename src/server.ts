@@ -17,16 +17,15 @@ async function shutdown() {
 process.on('SIGTERM', shutdown);
 process.on('SIGINT', shutdown);
 
-AppDataSource.initialize()
-  .then(async () => {
-    await AppDataSource.runMigrations();
-    await ensureTopics();
-    await connect();
-    setupConsumers();
-    buildApp();
-    return listen(PORT, HOST);
-  })
-  .catch((err) => {
-    console.error('Failed to start:', err);
-    process.exit(1);
-  });
+buildApp();
+
+listen(PORT, HOST, async () => {
+  await AppDataSource.initialize();
+  await AppDataSource.runMigrations();
+  await ensureTopics();
+  await connect();
+  setupConsumers();
+}).catch((err) => {
+  console.error('Failed to start:', err);
+  process.exit(1);
+});
