@@ -1,0 +1,13 @@
+{
+  "kafka_topics": {
+    "journeyInitiated":            { "topic": "journey-initiated" },
+    "diagnosticTriggered":         { "topic": "diagnostic-triggered" },
+    "diagnosticCompleted":         { "topic": "diagnostic-completed" },
+    "analysisStarted":             { "topic": "analysis-started" },
+    "analysisFinished":            { "topic": "analysis-finished" },
+    "curriculumGenerated":         { "topic": "curriculum-generated" },
+    "contentDispatched":           { "topic": "content-dispatched" },
+    "studentEngagementReceived":   { "topic": "student-engagement-received" },
+    "progressMilestoneReached":    { "topic": "progress-milestone-reached" }
+  }
+}

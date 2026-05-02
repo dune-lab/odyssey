@@ -11,9 +11,9 @@ export const JOURNEY_STEPS = [
   'STUDENT_ENGAGEMENT_RECEIVED',
   'PROGRESS_MILESTONE_REACHED',
   'JOURNEY_COMPLETED',
-] as const;
+];
 
-export const JOURNEY_STATUSES = ['active', 'completed', 'failed'] as const;
+export const JOURNEY_STATUSES = ['active', 'completed', 'failed'];
 
 export type JourneyStep = (typeof JOURNEY_STEPS)[number];
 export type JourneyStatus = (typeof JOURNEY_STATUSES)[number];
