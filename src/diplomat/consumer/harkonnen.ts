@@ -22,21 +22,25 @@ export async function setupHarkonnenConsumer(): Promise<void> {
     eachMessage: async ({ message }) => {
       const raw = message.value?.toString();
       if (!raw) return;
-      const data = JSON.parse(raw) as {
-        originalTopic: string;
-        name: string;
-        payload: unknown;
-        error: string;
-        failedAt: string;
-      };
-      logger.info({ topic: DLQ_TOPIC, name: data.name }, 'harkonnen: DLQ message received');
-      await insert({
-        originalTopic: data.originalTopic,
-        name: data.name,
-        payload: JSON.stringify(data.payload),
-        error: data.error,
-        failedAt: data.failedAt,
-      });
+      try {
+        const data = JSON.parse(raw) as {
+          originalTopic: string;
+          name: string;
+          payload: unknown;
+          error: string;
+          failedAt: string;
+        };
+        logger.info({ topic: DLQ_TOPIC, name: data.name }, 'harkonnen: DLQ message received');
+        await insert({
+          originalTopic: data.originalTopic,
+          name: data.name,
+          payload: JSON.stringify(data.payload),
+          error: data.error,
+          failedAt: data.failedAt,
+        });
+      } catch (err) {
+        logger.error({ err, topic: DLQ_TOPIC }, 'harkonnen: failed to process DLQ message');
+      }
     },
   });
 }
