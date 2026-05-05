@@ -1,5 +1,5 @@
 import { fn, asUUID } from '@enxoval/types';
-import { HarkonnenMessage, HarkonnenMessageInput } from '../model/harkonnen-message';
+import { HarkonnenMessage, HarkonnenMessageInput, HARKONNEN_STATUSES } from '../model/harkonnen-message';
 import { HarkonnenMessageDbWire } from '../db/wire/harkonnen-message';
 
 /**
@@ -16,7 +16,7 @@ export const fromDbWire = fn(HarkonnenMessageDbWire, HarkonnenMessage, (wire) =>
   payload:        JSON.stringify(wire.payload),
   error:          wire.error,
   failedAt:       wire.failed_at.toISOString(),
-  status:         wire.status,
+  status:         wire.status as typeof HARKONNEN_STATUSES[number],
   reprocessedAt:  wire.reprocessed_at ? wire.reprocessed_at.toISOString() : null,
   createdAt:      wire.created_at.toISOString(),
 }));

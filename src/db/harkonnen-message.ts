@@ -43,7 +43,7 @@ export const insert = asyncFn(HarkonnenMessageInput, HarkonnenMessage, async (in
  */
 export async function findAll(): Promise<ReturnType<typeof HarkonnenMessage.parse>[]> {
   const rows = await repo().find({ order: { created_at: 'DESC' } });
-  return rows.map((row) => HarkonnenMessage.parse(fromDbWire(row)));
+  return rows.map(fromDbWire);
 }
 
 /**
@@ -54,7 +54,7 @@ export async function findAll(): Promise<ReturnType<typeof HarkonnenMessage.pars
  */
 export async function findById(id: UUID): Promise<ReturnType<typeof HarkonnenMessage.parse> | null> {
   const row = await repo().findOne({ where: { id } });
-  return row ? HarkonnenMessage.parse(fromDbWire(row)) : null;
+  return row ? fromDbWire(row) : null;
 }
 
 /**
@@ -69,7 +69,7 @@ export async function findPendingByTopic(
   topic: string,
 ): Promise<ReturnType<typeof HarkonnenMessage.parse>[]> {
   const rows = await repo().find({ where: { original_topic: topic, status: 'pending' } });
-  return rows.map((row) => HarkonnenMessage.parse(fromDbWire(row)));
+  return rows.map(fromDbWire);
 }
 
 /**
