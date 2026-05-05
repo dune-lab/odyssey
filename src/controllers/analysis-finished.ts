@@ -8,6 +8,7 @@ import { buildJourneyStepUpdate } from '../logic/journey';
 import * as analysisFinishedDb from '../db/analysis-finished';
 import * as curriculumGeneratedDb from '../db/curriculum-generated';
 import * as journeyDb from '../db/journey';
+import * as journeyEventBus from '../wire/journey-event-bus';
 
 const sideEffect = asyncFn(Event, async (event) => {
   await publish('curriculumGenerated', event);
@@ -28,5 +29,10 @@ export const analysisFinished = asyncFn(Event, async (event) => {
   await journeyDb.updateStep(
     buildJourneyStepUpdate({ id: previous.journeyId, currentStep: 'CURRICULUM_GENERATED' }),
   );
+  journeyEventBus.emit(previous.journeyId, {
+    id: previous.journeyId,
+    currentStep: 'CURRICULUM_GENERATED',
+    status: 'active',
+  });
   await sideEffect(buildEvent({ journeyId: current.journeyId, eventId: current.id }));
 });

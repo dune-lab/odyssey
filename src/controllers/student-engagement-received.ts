@@ -8,6 +8,7 @@ import { buildJourneyStepUpdate } from '../logic/journey';
 import * as studentEngagementReceivedDb from '../db/student-engagement-received';
 import * as progressMilestoneReachedDb from '../db/progress-milestone-reached';
 import * as journeyDb from '../db/journey';
+import * as journeyEventBus from '../wire/journey-event-bus';
 
 const sideEffect = asyncFn(Event, async (event) => {
   await publish('progressMilestoneReached', event);
@@ -28,5 +29,10 @@ export const studentEngagementReceived = asyncFn(Event, async (event) => {
   await journeyDb.updateStep(
     buildJourneyStepUpdate({ id: previous.journeyId, currentStep: 'PROGRESS_MILESTONE_REACHED' }),
   );
+  journeyEventBus.emit(previous.journeyId, {
+    id: previous.journeyId,
+    currentStep: 'PROGRESS_MILESTONE_REACHED',
+    status: 'active',
+  });
   await sideEffect(buildEvent({ journeyId: current.journeyId, eventId: current.id }));
 });

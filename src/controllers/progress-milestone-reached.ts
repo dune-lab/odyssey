@@ -6,6 +6,7 @@ import { buildJourneyStepUpdate, buildJourneyStatusUpdate } from '../logic/journ
 import * as progressMilestoneReachedDb from '../db/progress-milestone-reached';
 import * as journeyCompletedDb from '../db/journey-completed';
 import * as journeyDb from '../db/journey';
+import * as journeyEventBus from '../wire/journey-event-bus';
 
 export const progressMilestoneReached = asyncFn(Event, async (event) => {
   const previous = await progressMilestoneReachedDb.findById(event.eventId);
@@ -22,4 +23,9 @@ export const progressMilestoneReached = asyncFn(Event, async (event) => {
   await journeyDb.updateStatus(
     buildJourneyStatusUpdate({ id: previous.journeyId, status: 'completed' }),
   );
+  journeyEventBus.emit(previous.journeyId, {
+    id: previous.journeyId,
+    currentStep: 'JOURNEY_COMPLETED',
+    status: 'completed',
+  });
 });
