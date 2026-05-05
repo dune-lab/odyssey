@@ -12,15 +12,15 @@ export const HARKONNEN_STATUSES = ['pending', 'reprocessed', 'dismissed'] as con
  * Timestamps are strings: model is the direct API response shape with no toWireOut conversion step.
  */
 export const HarkonnenMessage = createSchema({
-  id:             field.uuid(),
-  originalTopic:  field.string(),
-  name:           field.string(),
-  payload:        field.string(),
-  error:          field.string(),
-  failedAt:       field.string(),
-  status:         field.literal(...HARKONNEN_STATUSES),
-  reprocessedAt:  field.nullable(field.string()),
-  createdAt:      field.string(),
+  id: field.uuid(),
+  originalTopic: field.string(),
+  name: field.string(),
+  payload: field.string(),
+  error: field.string(),
+  failedAt: field.string(),
+  status: field.literal(...HARKONNEN_STATUSES),
+  reprocessedAt: field.nullable(field.string()),
+  createdAt: field.string(),
 });
 
 /**
@@ -31,8 +31,8 @@ export const HarkonnenMessage = createSchema({
  */
 export const HarkonnenMessageInput = createSchema({
   originalTopic: field.string(),
-  name:          field.string(),
-  payload:       field.string(),
-  error:         field.string(),
-  failedAt:      field.string(),
+  name: field.string(),
+  payload: field.string(),
+  error: field.string(),
+  failedAt: field.string(),
 });

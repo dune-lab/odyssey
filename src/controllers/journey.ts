@@ -15,6 +15,8 @@ const sideEffect = asyncFn(Event, async (event) => {
 export const startJourney = asyncFn(JourneyInput, Journey, async (input) => {
   const journey = await journeyDb.insert(buildJourney({ studentId: input.studentId }));
   const journeyInitiated = await journeyInitiatedDb.insert(buildJourneyInitiated(journey));
-  await sideEffect(buildEvent({ journeyId: journeyInitiated.journeyId, eventId: journeyInitiated.id }));
+  await sideEffect(
+    buildEvent({ journeyId: journeyInitiated.journeyId, eventId: journeyInitiated.id }),
+  );
   return journey;
 });

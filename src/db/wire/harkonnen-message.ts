@@ -34,15 +34,15 @@ export const HarkonnenMessageSchema: SchemaDefinition<HarkonnenMessageDbWire> = 
   {
     tableName: 'harkonnen_messages',
     columns: {
-      id:             column.primaryUuid(),
+      id: column.primaryUuid(),
       original_topic: column.varchar(),
-      name:           column.varchar(),
-      payload:        { type: 'jsonb' },
-      error:          { type: 'text' },
-      failed_at:      { type: 'timestamptz' },
-      status:         column.varchar(),
+      name: column.varchar(),
+      payload: { type: 'jsonb' },
+      error: { type: 'text' },
+      failed_at: { type: 'timestamptz' },
+      status: column.varchar(),
       reprocessed_at: { type: 'timestamptz', nullable: true },
-      created_at:     column.createdAt(),
+      created_at: column.createdAt(),
     },
   },
 );

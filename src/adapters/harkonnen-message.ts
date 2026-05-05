@@ -1,5 +1,9 @@
 import { fn, asUUID } from '@enxoval/types';
-import { HarkonnenMessage, HarkonnenMessageInput, HARKONNEN_STATUSES } from '../model/harkonnen-message';
+import {
+  HarkonnenMessage,
+  HarkonnenMessageInput,
+  HARKONNEN_STATUSES,
+} from '../model/harkonnen-message';
 import { HarkonnenMessageDbWire } from '../db/wire/harkonnen-message';
 
 /**
@@ -10,15 +14,15 @@ import { HarkonnenMessageDbWire } from '../db/wire/harkonnen-message';
  * and converts object payload to JSON string for API exposure.
  */
 export const fromDbWire = fn(HarkonnenMessageDbWire, HarkonnenMessage, (wire) => ({
-  id:             asUUID(wire.id),
-  originalTopic:  wire.original_topic,
-  name:           wire.name,
-  payload:        JSON.stringify(wire.payload),
-  error:          wire.error,
-  failedAt:       wire.failed_at.toISOString(),
-  status:         wire.status as typeof HARKONNEN_STATUSES[number],
-  reprocessedAt:  wire.reprocessed_at ? wire.reprocessed_at.toISOString() : null,
-  createdAt:      wire.created_at.toISOString(),
+  id: asUUID(wire.id),
+  originalTopic: wire.original_topic,
+  name: wire.name,
+  payload: JSON.stringify(wire.payload),
+  error: wire.error,
+  failedAt: wire.failed_at.toISOString(),
+  status: wire.status as (typeof HARKONNEN_STATUSES)[number],
+  reprocessedAt: wire.reprocessed_at ? wire.reprocessed_at.toISOString() : null,
+  createdAt: wire.created_at.toISOString(),
 }));
 
 /**
@@ -32,10 +36,10 @@ export const fromDbWire = fn(HarkonnenMessageDbWire, HarkonnenMessage, (wire) =>
 export const toDbWire = fn(HarkonnenMessageInput, HarkonnenMessageDbWire, (input) => {
   const row = new HarkonnenMessageDbWire();
   row.original_topic = input.originalTopic;
-  row.name           = input.name;
-  row.payload        = JSON.parse(input.payload) as object;
-  row.error          = input.error;
-  row.failed_at      = new Date(input.failedAt);
-  row.status         = 'pending';
+  row.name = input.name;
+  row.payload = JSON.parse(input.payload) as object;
+  row.error = input.error;
+  row.failed_at = new Date(input.failedAt);
+  row.status = 'pending';
   return row;
 });

@@ -45,18 +45,26 @@ const JourneyEventOut = createSchema({
 
 const FetchEventsInput = createSchema({ journeyId: field.uuid() });
 
-const fetchEvents = asyncFn(FetchEventsInput, field.array(JourneyEventOut), async ({ journeyId }) => {
-  const results = await Promise.all(EVENT_TABLES.map(([, db]) => db.findAll()));
-  const events: Array<{ name: string; id: string; createdAt: string }> = [];
-  for (let i = 0; i < EVENT_TABLES.length; i++) {
-    for (const event of results[i]) {
-      if (event.journeyId === journeyId) {
-        events.push({ name: EVENT_TABLES[i][0], id: event.id, createdAt: event.createdAt.toISOString() });
+const fetchEvents = asyncFn(
+  FetchEventsInput,
+  field.array(JourneyEventOut),
+  async ({ journeyId }) => {
+    const results = await Promise.all(EVENT_TABLES.map(([, db]) => db.findAll()));
+    const events: Array<{ name: string; id: string; createdAt: string }> = [];
+    for (let i = 0; i < EVENT_TABLES.length; i++) {
+      for (const event of results[i]) {
+        if (event.journeyId === journeyId) {
+          events.push({
+            name: EVENT_TABLES[i][0],
+            id: event.id,
+            createdAt: event.createdAt.toISOString(),
+          });
+        }
       }
     }
-  }
-  return events.sort((a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime());
-});
+    return events.sort((a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime());
+  },
+);
 
 export function registerJourneyRoutes(): void {
   post('/journeys', async (body) => {

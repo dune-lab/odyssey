@@ -24,7 +24,9 @@ export async function findAll(): Promise<ReturnType<typeof Journey.parse>[]> {
   return rows.map(fromDbWire);
 }
 
-export async function findByStudentId(studentId: string): Promise<ReturnType<typeof Journey.parse> | null> {
+export async function findByStudentId(
+  studentId: string,
+): Promise<ReturnType<typeof Journey.parse> | null> {
   const row = await repo().findOneBy({ student_id: studentId });
   return row ? fromDbWire(row) : null;
 }

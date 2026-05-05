@@ -52,7 +52,9 @@ export async function findAll(): Promise<ReturnType<typeof HarkonnenMessage.pars
  * Input: id (UUID)
  * Returns: HarkonnenMessage | null
  */
-export async function findById(id: UUID): Promise<ReturnType<typeof HarkonnenMessage.parse> | null> {
+export async function findById(
+  id: UUID,
+): Promise<ReturnType<typeof HarkonnenMessage.parse> | null> {
   const row = await repo().findOne({ where: { id } });
   return row ? fromDbWire(row) : null;
 }
