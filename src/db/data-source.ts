@@ -12,6 +12,7 @@ import { ContentDispatchedSchema } from './wire/content-dispatched';
 import { StudentEngagementReceivedSchema } from './wire/student-engagement-received';
 import { ProgressMilestoneReachedSchema } from './wire/progress-milestone-reached';
 import { JourneyCompletedSchema } from './wire/journey-completed';
+import { HarkonnenMessageSchema } from './wire/harkonnen-message';
 
 export const AppDataSource = createDataSource({
   host: process.env.DB_HOST || 'localhost',
@@ -31,6 +32,7 @@ export const AppDataSource = createDataSource({
     StudentEngagementReceivedSchema,
     ProgressMilestoneReachedSchema,
     JourneyCompletedSchema,
+    HarkonnenMessageSchema,
   ],
   migrationsDir: join(__dirname, 'migrations'),
 });
