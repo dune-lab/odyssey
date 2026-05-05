@@ -8,6 +8,7 @@ import { buildJourneyStepUpdate } from '../logic/journey';
 import { findById } from '../db/journey-initiated';
 import * as diagnosticTriggeredDb from '../db/diagnostic-triggered';
 import * as journeyDb from '../db/journey';
+import * as journeyEventBus from '../wire/journey-event-bus';
 
 const sideEffect = asyncFn(Event, async (event) => {
   await publish('diagnosticTriggered', event);
@@ -28,5 +29,10 @@ export const journeyStarted = asyncFn(Event, async (event) => {
   await journeyDb.updateStep(
     buildJourneyStepUpdate({ id: previous.journeyId, currentStep: 'DIAGNOSTIC_TRIGGERED' }),
   );
+  journeyEventBus.emit(previous.journeyId, {
+    id: previous.journeyId,
+    currentStep: 'DIAGNOSTIC_TRIGGERED',
+    status: 'active',
+  });
   await sideEffect(buildEvent({ journeyId: current.journeyId, eventId: current.id }));
 });
