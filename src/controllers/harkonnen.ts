@@ -12,14 +12,15 @@ export const listDlqMessages = asyncFn(NoInput, field.array(HarkonnenMessage), a
 export const reprocessDlqOne = asyncFn(ReprocessOneWireIn, ReprocessOneWireOut, async (input) => {
   const msg = await db.findById(input.id);
   if (!msg) throw new NotFoundError(`DLQ message ${input.id} not found`);
-  const parsed = JSON.parse(input.payload) as unknown;
-  await publishRaw(msg.originalTopic, parsed);
+  const editedPayload = JSON.parse(input.payload) as unknown;
+  await publishRaw(msg.originalTopic, editedPayload);
   await db.markReprocessed(input.id);
   return { reprocessed: true };
 });
 
 export const reprocessDlqAllByTopic = asyncFn(ReprocessAllByTopicWireIn, ReprocessAllWireOut, async (input) => {
   const messages = await db.findPendingByTopic(input.topic);
+  // at-least-once: if markReprocessed fails after publishRaw, the message remains pending and may be reprocessed again
   await Promise.all(
     messages.map(async (msg) => {
       await publishRaw(msg.originalTopic, JSON.parse(msg.payload) as unknown);
