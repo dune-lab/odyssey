@@ -1,12 +1,14 @@
-import { describe, it, expect } from '@enxoval/testing';
-import { buildEvent } from '../../../src/logic/event';
+/**
+ * Unit tests for event logic functions using itCases.
+ * Covers buildEvent.
+ */
 
-const journeyId = '11111111-1111-1111-1111-111111111111';
-const eventId = 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa';
+import { describe, itCases, expect } from '@enxoval/testing';
+import { buildEvent } from '../../../src/logic/event';
+import { Event } from '../../../src/model/event';
 
 describe('buildEvent', () => {
-  it('returns journeyId and eventId from input', () => {
-    const result = buildEvent({ journeyId, eventId });
-    expect(result).toEqual({ journeyId, eventId });
+  itCases('returns journeyId and eventId from input', Event, (input) => {
+    expect(buildEvent(input)).toEqual({ journeyId: input.journeyId, eventId: input.eventId });
   });
 });

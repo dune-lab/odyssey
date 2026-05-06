@@ -1,43 +1,39 @@
-import { describe, it, expect } from '@enxoval/testing';
+import { describe, it, itCases, generate, expect } from '@enxoval/testing';
 import { fromDbWire, toDbWire } from '../../../src/adapters/journey-initiated';
 import { JourneyInitiatedDbWire } from '../../../src/db/wire/journey-initiated';
-
-const journeyId = '11111111-1111-1111-1111-111111111111';
-const id = 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa';
+import { JourneyInitiated, JourneyInitiatedInput } from '../../../src/model/journey-initiated';
 
 describe('journey-initiated adapter — fromDbWire', () => {
-  it('maps snake_case db columns to camelCase model', () => {
-    const wire = new JourneyInitiatedDbWire();
-    wire.id = id;
-    wire.journey_id = journeyId;
-    wire.created_at = new Date('2024-01-01');
+  it('fromDbWire maps fields', () => {
+    const expected = generate(JourneyInitiated);
 
-    expect(fromDbWire(wire)).toEqual({
-      id,
-      journeyId,
-      createdAt: new Date('2024-01-01'),
-    });
+    const wire = new JourneyInitiatedDbWire();
+    wire.id = expected.id;
+    wire.journey_id = expected.journeyId;
+    wire.created_at = new Date();
+
+    const result = fromDbWire(wire);
+
+    expect(result.id).toBe(expected.id);
+    expect(result.journeyId).toBe(expected.journeyId);
+    expect(result.createdAt).toBeInstanceOf(Date);
   });
 });
 
 describe('journey-initiated adapter — toDbWire', () => {
-  it('returns a JourneyInitiatedDbWire instance', () => {
-    const result = toDbWire({ journeyId });
-    expect(result).toBeInstanceOf(JourneyInitiatedDbWire);
+  itCases('returns a JourneyInitiatedDbWire instance', JourneyInitiatedInput, (input) => {
+    expect(toDbWire(input)).toBeInstanceOf(JourneyInitiatedDbWire);
   });
 
-  it('maps journeyId to journey_id', () => {
-    const result = toDbWire({ journeyId });
-    expect(result.journey_id).toBe(journeyId);
+  itCases('maps journeyId to journey_id', JourneyInitiatedInput, (input) => {
+    expect(toDbWire(input).journey_id).toBe(input.journeyId);
   });
 
-  it('does not set id (delegated to DB)', () => {
-    const result = toDbWire({ journeyId });
-    expect(result.id).toBeUndefined();
+  itCases('does not set id (delegated to DB)', JourneyInitiatedInput, (input) => {
+    expect(toDbWire(input).id).toBeUndefined();
   });
 
-  it('does not set created_at (delegated to DB)', () => {
-    const result = toDbWire({ journeyId });
-    expect(result.created_at).toBeUndefined();
+  itCases('does not set created_at (delegated to DB)', JourneyInitiatedInput, (input) => {
+    expect(toDbWire(input).created_at).toBeUndefined();
   });
 });

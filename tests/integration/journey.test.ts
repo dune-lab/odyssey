@@ -1,4 +1,4 @@
-import { test, describe, it, expect, beforeAll, beforeEach, afterAll, afterEach } from '@enxoval/testing';
+import { test, describe, it, expect, beforeAll, beforeEach, afterAll, afterEach, generate } from '@enxoval/testing';
 import { TestDataSource } from './helpers/data-source';
 
 test.mock('../../src/db/data-source', () => ({ AppDataSource: TestDataSource }));
@@ -15,9 +15,10 @@ import { publish } from '@enxoval/messaging';
 import { AppDataSource } from '../../src/db/data-source';
 import { JourneyDbWire } from '../../src/db/wire/journey';
 import { JourneyInitiatedDbWire } from '../../src/db/wire/journey-initiated';
+import { StartJourneyWireIn } from '../../src/wire/in/journey';
 
-const studentId = '22222222-2222-2222-2222-222222222222';
-const validBody = { studentId };
+const validBody = generate(StartJourneyWireIn);
+const studentId = validBody.studentId;
 
 beforeAll(async () => {
   await TestDataSource.initialize();

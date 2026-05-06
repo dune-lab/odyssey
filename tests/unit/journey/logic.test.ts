@@ -1,41 +1,38 @@
-import { describe, it, expect } from '@enxoval/testing';
-import { buildJourney, buildJourneyStepUpdate, buildJourneyStatusUpdate } from '../../../src/logic/journey';
+/**
+ * Unit tests for journey logic functions using itCases.
+ * Covers buildJourney, buildJourneyStepUpdate, and buildJourneyStatusUpdate.
+ */
 
-const studentId = '22222222-2222-2222-2222-222222222222';
-const journeyId = '11111111-1111-1111-1111-111111111111';
+import { describe, itCases, expect } from '@enxoval/testing';
+import { buildJourney, buildJourneyStepUpdate, buildJourneyStatusUpdate } from '../../../src/logic/journey';
+import { JourneyInput, JourneyStepUpdate, JourneyStatusUpdate } from '../../../src/model/journey';
 
 describe('buildJourney', () => {
-  it('sets initial step to JOURNEY_INITIATED', () => {
-    const result = buildJourney({ studentId });
-    expect(result.currentStep).toBe('JOURNEY_INITIATED');
+  itCases('sets initial step to JOURNEY_INITIATED', JourneyInput, (input) => {
+    expect(buildJourney(input).currentStep).toBe('JOURNEY_INITIATED');
   });
 
-  it('sets initial status to active', () => {
-    const result = buildJourney({ studentId });
-    expect(result.status).toBe('active');
+  itCases('sets initial status to active', JourneyInput, (input) => {
+    expect(buildJourney(input).status).toBe('active');
   });
 
-  it('carries studentId through', () => {
-    const result = buildJourney({ studentId });
-    expect(result.studentId).toBe(studentId);
+  itCases('carries studentId through', JourneyInput, (input) => {
+    expect(buildJourney(input).studentId).toBe(input.studentId);
   });
 
-  it('does not generate id', () => {
-    const result = buildJourney({ studentId });
-    expect((result as Record<string, unknown>).id).toBeUndefined();
+  itCases('does not generate id', JourneyInput, (input) => {
+    expect((buildJourney(input) as Record<string, unknown>).id).toBeUndefined();
   });
 });
 
 describe('buildJourneyStepUpdate', () => {
-  it('returns input unchanged', () => {
-    const input = { id: journeyId, currentStep: 'DIAGNOSTIC_TRIGGERED' as const };
+  itCases('returns input unchanged', JourneyStepUpdate, (input) => {
     expect(buildJourneyStepUpdate(input)).toEqual(input);
   });
 });
 
 describe('buildJourneyStatusUpdate', () => {
-  it('returns input unchanged', () => {
-    const input = { id: journeyId, status: 'completed' as const };
+  itCases('returns input unchanged', JourneyStatusUpdate, (input) => {
     expect(buildJourneyStatusUpdate(input)).toEqual(input);
   });
 });

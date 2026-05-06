@@ -1,5 +1,7 @@
-import { test, describe, it, expect, beforeAll, beforeEach, afterAll, afterEach } from '@enxoval/testing';
+import { test, describe, it, expect, beforeAll, beforeEach, afterAll, afterEach, generate } from '@enxoval/testing';
 import { TestDataSource } from './helpers/data-source';
+import { Journey } from '../../src/model/journey';
+import { EventRecord } from '../../src/model/event-record';
 
 test.mock('../../src/db/data-source', () => ({ AppDataSource: TestDataSource }));
 test.mock('@enxoval/auth', () => ({ setupAuth: test.fn() }));
@@ -17,8 +19,8 @@ import { CurriculumGeneratedDbWire } from '../../src/db/wire/curriculum-generate
 import { ContentDispatchedDbWire } from '../../src/db/wire/content-dispatched';
 import { curriculumGenerated } from '../../src/controllers/curriculum-generated';
 
-const journeyId = '11111111-1111-1111-1111-111111111111';
-const cgId = 'ffffffff-ffff-ffff-ffff-ffffffffffff';
+const journeyId = generate(Journey).id;
+const cgId = generate(EventRecord).id;
 
 beforeAll(async () => {
   await TestDataSource.initialize();

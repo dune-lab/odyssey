@@ -1,5 +1,7 @@
-import { test, describe, it, expect, beforeAll, beforeEach, afterAll, afterEach } from '@enxoval/testing';
+import { test, describe, it, expect, beforeAll, beforeEach, afterAll, afterEach, generate } from '@enxoval/testing';
 import { TestDataSource } from './helpers/data-source';
+import { Journey } from '../../src/model/journey';
+import { EventRecord } from '../../src/model/event-record';
 
 test.mock('../../src/db/data-source', () => ({ AppDataSource: TestDataSource }));
 test.mock('@enxoval/auth', () => ({ setupAuth: test.fn() }));
@@ -16,8 +18,8 @@ import { ProgressMilestoneReachedDbWire } from '../../src/db/wire/progress-miles
 import { JourneyCompletedDbWire } from '../../src/db/wire/journey-completed';
 import { progressMilestoneReached } from '../../src/controllers/progress-milestone-reached';
 
-const journeyId = '11111111-1111-1111-1111-111111111111';
-const pmrId = '00000003-0000-0000-0000-000000000003';
+const journeyId = generate(Journey).id;
+const pmrId = generate(EventRecord).id;
 
 beforeAll(async () => {
   await TestDataSource.initialize();

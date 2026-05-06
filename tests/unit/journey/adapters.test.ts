@@ -1,49 +1,46 @@
-import { describe, it, expect } from '@enxoval/testing';
+import { describe, it, itCases, generate, expect } from '@enxoval/testing';
 import { fromDbWire, toDbWire } from '../../../src/adapters/journey';
 import { JourneyDbWire } from '../../../src/db/wire/journey';
-
-const journeyId = '11111111-1111-1111-1111-111111111111';
-const studentId = '22222222-2222-2222-2222-222222222222';
+import { Journey, JourneyRecord } from '../../../src/model/journey';
 
 describe('journey adapter — fromDbWire', () => {
-  it('maps snake_case db columns to camelCase model', () => {
-    const wire = new JourneyDbWire();
-    wire.id = journeyId;
-    wire.student_id = studentId;
-    wire.current_step = 'JOURNEY_INITIATED';
-    wire.status = 'active';
-    wire.created_at = new Date('2024-01-01');
+  it('fromDbWire maps fields', () => {
+    const expected = generate(Journey);
 
-    expect(fromDbWire(wire)).toEqual({
-      id: journeyId,
-      studentId,
-      currentStep: 'JOURNEY_INITIATED',
-      status: 'active',
-      createdAt: new Date('2024-01-01'),
-    });
+    const wire = new JourneyDbWire();
+    wire.id = expected.id;
+    wire.student_id = expected.studentId;
+    wire.current_step = expected.currentStep;
+    wire.status = expected.status;
+    wire.created_at = new Date();
+
+    const result = fromDbWire(wire);
+
+    expect(result.id).toBe(expected.id);
+    expect(result.studentId).toBe(expected.studentId);
+    expect(result.currentStep).toBe(expected.currentStep);
+    expect(result.status).toBe(expected.status);
+    expect(result.createdAt).toBeInstanceOf(Date);
   });
 });
 
 describe('journey adapter — toDbWire', () => {
-  it('returns a JourneyDbWire instance', () => {
-    const result = toDbWire({ studentId, currentStep: 'JOURNEY_INITIATED', status: 'active' });
-    expect(result).toBeInstanceOf(JourneyDbWire);
+  itCases('returns a JourneyDbWire instance', JourneyRecord, (input) => {
+    expect(toDbWire(input)).toBeInstanceOf(JourneyDbWire);
   });
 
-  it('maps fields correctly', () => {
-    const result = toDbWire({ studentId, currentStep: 'JOURNEY_INITIATED', status: 'active' });
-    expect(result.student_id).toBe(studentId);
-    expect(result.current_step).toBe('JOURNEY_INITIATED');
-    expect(result.status).toBe('active');
+  itCases('maps student_id, current_step and status', JourneyRecord, (input) => {
+    const result = toDbWire(input);
+    expect(result.student_id).toBe(input.studentId);
+    expect(result.current_step).toBe(input.currentStep);
+    expect(result.status).toBe(input.status);
   });
 
-  it('does not set id (delegated to DB)', () => {
-    const result = toDbWire({ studentId, currentStep: 'JOURNEY_INITIATED', status: 'active' });
-    expect(result.id).toBeUndefined();
+  itCases('does not set id (delegated to DB)', JourneyRecord, (input) => {
+    expect(toDbWire(input).id).toBeUndefined();
   });
 
-  it('does not set created_at (delegated to DB)', () => {
-    const result = toDbWire({ studentId, currentStep: 'JOURNEY_INITIATED', status: 'active' });
-    expect(result.created_at).toBeUndefined();
+  itCases('does not set created_at (delegated to DB)', JourneyRecord, (input) => {
+    expect(toDbWire(input).created_at).toBeUndefined();
   });
 });

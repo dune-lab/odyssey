@@ -1,5 +1,7 @@
-import { test, describe, it, expect, beforeAll, beforeEach, afterAll, afterEach } from '@enxoval/testing';
+import { test, describe, it, expect, beforeAll, beforeEach, afterAll, afterEach, generate } from '@enxoval/testing';
 import { TestDataSource } from './helpers/data-source';
+import { Journey } from '../../src/model/journey';
+import { EventRecord } from '../../src/model/event-record';
 
 test.mock('../../src/db/data-source', () => ({ AppDataSource: TestDataSource }));
 test.mock('@enxoval/auth', () => ({ setupAuth: test.fn() }));
@@ -17,8 +19,8 @@ import { DiagnosticTriggeredDbWire } from '../../src/db/wire/diagnostic-triggere
 import { DiagnosticCompletedDbWire } from '../../src/db/wire/diagnostic-completed';
 import { diagnosticTriggered } from '../../src/controllers/diagnostic-triggered';
 
-const journeyId = '11111111-1111-1111-1111-111111111111';
-const dtId = 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb';
+const journeyId = generate(Journey).id;
+const dtId = generate(EventRecord).id;
 
 beforeAll(async () => {
   await TestDataSource.initialize();
