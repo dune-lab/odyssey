@@ -6,6 +6,7 @@ import { EventRecord, EventRecordInput } from '../../../src/model/event-record';
 describe('analysis-started adapter — fromDbWire', () => {
   it('fromDbWire maps fields', () => {
     const expected = generate(EventRecord);
+    console.log(expected)
 
     const wire = new AnalysisStartedDbWire();
     wire.id = expected.id;
