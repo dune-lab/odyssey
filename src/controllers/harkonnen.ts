@@ -15,7 +15,7 @@ export const reprocessDlqOne = asyncFn(ReprocessOneWireIn, ReprocessOneWireOut, 
   const editedPayload = JSON.parse(input.payload) as unknown;
   await publishRaw(msg.originalTopic, editedPayload);
   await db.markReprocessed(input.id);
-  return { reprocessed: true };
+  return { id: input.id, payload: input.payload };
 });
 
 export const reprocessDlqAllByTopic = asyncFn(ReprocessAllByTopicWireIn, ReprocessAllWireOut, async (input) => {
@@ -34,5 +34,5 @@ export const dismissDlqMessage = asyncFn(DismissWireIn, DismissWireOut, async (i
   const msg = await db.findById(input.id);
   if (!msg) throw new NotFoundError(`DLQ message ${input.id} not found`);
   await db.markDismissed(input.id);
-  return { dismissed: true };
+  return { id: input.id };
 });

@@ -1,7 +1,8 @@
 import { createSchema, field } from '@enxoval/types';
 
 export const ReprocessOneWireOut = createSchema({
-  reprocessed: field.boolean(),
+  id: field.uuid(),
+  payload: field.string(),
 });
 
 export const ReprocessAllWireOut = createSchema({
@@ -9,5 +10,5 @@ export const ReprocessAllWireOut = createSchema({
 });
 
 export const DismissWireOut = createSchema({
-  dismissed: field.boolean(),
+  id: field.uuid(),
 });
