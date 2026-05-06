@@ -4,7 +4,7 @@ WORKDIR /app
 
 COPY odyssey/package.json ./package.json
 COPY odyssey/package-lock.json ./package-lock.json
-RUN npm ci
+RUN npm install
 
 COPY odyssey/src ./src
 COPY odyssey/tsconfig.json ./tsconfig.json
