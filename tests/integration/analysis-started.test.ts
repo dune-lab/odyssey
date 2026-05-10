@@ -5,11 +5,10 @@ import { EventRecord } from '../../src/model/event-record';
 
 test.mock('../../src/db/data-source', () => ({ AppDataSource: TestDataSource }));
 test.mock('@enxoval/auth', () => ({ setupAuth: test.fn() }));
-test.mock('@enxoval/messaging', () => ({
-  publish: test.fn(),
-  connect: test.fn(),
-  disconnect: test.fn(),
-}));
+test.mock(import('@enxoval/messaging'), async (importOriginal) => {
+  const actual = await importOriginal();
+  return { ...actual, publish: test.fn(), publishRaw: test.fn(), connect: test.fn(), disconnect: test.fn() };
+});
 
 import { buildApp } from '../../src/app';
 import { publish } from '@enxoval/messaging';

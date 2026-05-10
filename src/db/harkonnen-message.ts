@@ -15,7 +15,7 @@
 import { asyncFn, type UUID } from '@enxoval/types';
 import { AppDataSource } from './data-source';
 import { HarkonnenMessageDbWire } from './wire/harkonnen-message';
-import { HarkonnenMessage, HarkonnenMessageInput } from '../model/harkonnen-message';
+import { HarkonnenMessage, HarkonnenMessageInput } from '@enxoval/messaging';
 import { fromDbWire, toDbWire } from '../adapters/harkonnen-message';
 
 /**

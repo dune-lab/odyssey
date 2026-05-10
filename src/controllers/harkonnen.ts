@@ -2,7 +2,7 @@ import { asyncFn, field, NotFoundError } from '@enxoval/types';
 import { publishRaw } from '@enxoval/messaging';
 import { NoInput, ReprocessOneWireIn, ReprocessAllByTopicWireIn, DismissWireIn } from '../wire/in/harkonnen';
 import { ReprocessOneWireOut, ReprocessAllWireOut, DismissWireOut } from '../wire/out/harkonnen';
-import { HarkonnenMessage } from '../model/harkonnen-message';
+import { HarkonnenMessage } from '@enxoval/messaging';
 import * as db from '../db/harkonnen-message';
 
 export const listDlqMessages = asyncFn(NoInput, field.array(HarkonnenMessage), async (_) => {

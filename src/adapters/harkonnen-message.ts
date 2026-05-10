@@ -1,9 +1,5 @@
 import { fn, asUUID } from '@enxoval/types';
-import {
-  HarkonnenMessage,
-  HarkonnenMessageInput,
-  HARKONNEN_STATUSES,
-} from '../model/harkonnen-message';
+import { HarkonnenMessage, HarkonnenMessageInput, HARKONNEN_STATUSES } from '@enxoval/messaging';
 import { HarkonnenMessageDbWire } from '../db/wire/harkonnen-message';
 
 /**

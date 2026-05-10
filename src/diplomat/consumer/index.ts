@@ -1,4 +1,4 @@
-import { subscribe } from '@enxoval/messaging';
+import { consume } from '@enxoval/messaging';
 import { asyncFn } from '@enxoval/types';
 import { EventWireIn } from '../../wire/in/event';
 import { toModel } from '../../adapters/event';
@@ -16,13 +16,13 @@ const handle = (controller: (raw: unknown) => Promise<void>) =>
   asyncFn(EventWireIn, async (wire) => controller(toModel(wire)));
 
 export function setupConsumers(): void {
-  subscribe('journeyInitiated', handle(journeyStarted));
-  subscribe('diagnosticTriggered', handle(diagnosticTriggered));
-  subscribe('diagnosticCompleted', handle(diagnosticCompleted));
-  subscribe('analysisStarted', handle(analysisStarted));
-  subscribe('analysisFinished', handle(analysisFinished));
-  subscribe('curriculumGenerated', handle(curriculumGenerated));
-  subscribe('contentDispatched', handle(contentDispatched));
-  subscribe('studentEngagementReceived', handle(studentEngagementReceived));
-  subscribe('progressMilestoneReached', handle(progressMilestoneReached));
+  consume('journeyInitiated', handle(journeyStarted));
+  consume('diagnosticTriggered', handle(diagnosticTriggered));
+  consume('diagnosticCompleted', handle(diagnosticCompleted));
+  consume('analysisStarted', handle(analysisStarted));
+  consume('analysisFinished', handle(analysisFinished));
+  consume('curriculumGenerated', handle(curriculumGenerated));
+  consume('contentDispatched', handle(contentDispatched));
+  consume('studentEngagementReceived', handle(studentEngagementReceived));
+  consume('progressMilestoneReached', handle(progressMilestoneReached));
 }

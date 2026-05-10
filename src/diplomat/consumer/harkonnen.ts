@@ -2,7 +2,7 @@ import { kafka } from '@enxoval/messaging';
 import { logger } from '@enxoval/observability';
 import { insert } from '../../db/harkonnen-message';
 
-const DLQ_TOPIC = 'student-journey-dlq';
+const DLQ_TOPIC = `${process.env.SERVICE_NAME || 'odyssey'}-dlq`;
 
 /**
  * Sets up the Harkonnen DLQ consumer to listen for failed messages from the student-journey topic.

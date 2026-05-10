@@ -3,11 +3,10 @@ import { TestDataSource } from './helpers/data-source';
 
 vi.mock('../../src/db/data-source', () => ({ AppDataSource: TestDataSource }));
 vi.mock('@enxoval/auth', () => ({ setupAuth: vi.fn() }));
-vi.mock('@enxoval/messaging', () => ({
-  publish: vi.fn(),
-  connect: vi.fn(),
-  disconnect: vi.fn(),
-}));
+test.mock(import('@enxoval/messaging'), async (importOriginal) => {
+  const actual = await importOriginal();
+  return { ...actual, publish: test.fn(), publishRaw: test.fn(), connect: test.fn(), disconnect: test.fn() };
+});
 
 import { buildApp } from '../../src/app';
 import { publish } from '@enxoval/messaging';
