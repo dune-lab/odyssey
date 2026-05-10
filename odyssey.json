@@ -8,7 +8,6 @@
     "curriculumGenerated":         { "topic": "curriculum-generated" },
     "contentDispatched":           { "topic": "content-dispatched" },
     "studentEngagementReceived":   { "topic": "student-engagement-received" },
-    "progressMilestoneReached":    { "topic": "progress-milestone-reached" },
-    "odysseyDlq":                  { "topic": "odyssey-dlq", "direction": "consumer" }
+    "progressMilestoneReached":    { "topic": "progress-milestone-reached" }
   }
 }
