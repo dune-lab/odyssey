@@ -8,8 +8,7 @@ RUN npm install
 
 COPY odyssey/src ./src
 COPY odyssey/tsconfig.json ./tsconfig.json
-COPY odyssey/student-journey.json ./student-journey.json
-COPY odyssey/student-journey.json ./config.json
+COPY odyssey/odyssey.json ./odyssey.json
 
 RUN npx tsc
 
