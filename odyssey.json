@@ -9,6 +9,6 @@
     "contentDispatched":           { "topic": "content-dispatched" },
     "studentEngagementReceived":   { "topic": "student-engagement-received" },
     "progressMilestoneReached":    { "topic": "progress-milestone-reached" },
-    "studentJourneyDlq":           { "topic": "student-journey-dlq" }
+    "odysseyDlq":                  { "topic": "odyssey-dlq", "direction": "consumer" }
   }
 }
