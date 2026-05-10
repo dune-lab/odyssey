@@ -2,7 +2,8 @@ import { kafka } from '@enxoval/messaging';
 import { logger } from '@enxoval/observability';
 import { insert } from '../../db/harkonnen-message';
 
-const DLQ_TOPIC = `${process.env.SERVICE_NAME || 'odyssey'}-dlq`;
+const serviceName = process.env.SERVICE_NAME || 'odyssey';
+const DLQ_TOPIC = `${serviceName}-dlq`;
 
 /**
  * Sets up the Harkonnen DLQ consumer to listen for failed messages from the student-journey topic.
@@ -11,11 +12,11 @@ const DLQ_TOPIC = `${process.env.SERVICE_NAME || 'odyssey'}-dlq`;
  * database for later inspection and recovery. Unlike the standard subscribe() function, this uses
  * kafka.consumer() directly to avoid retry logic that would create an infinite DLQ loop.
  *
- * The consumer group 'odyssey-harkonnen-dlq' reads all historical DLQ messages on first start,
+ * The consumer group `${serviceName}-harkonnen-dlq` reads all historical DLQ messages on first start,
  * then continues to consume new messages as they arrive.
  */
 export async function setupHarkonnenConsumer(): Promise<void> {
-  const consumer = kafka.consumer({ groupId: 'odyssey-harkonnen-dlq' });
+  const consumer = kafka.consumer({ groupId: `${serviceName}-harkonnen-dlq` });
   await consumer.connect();
   await consumer.subscribe({ topic: DLQ_TOPIC, fromBeginning: true });
   await consumer.run({

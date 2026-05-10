@@ -1,8 +1,8 @@
 import { test, describe, it, expect, beforeAll, beforeEach, afterAll, afterEach, generate } from '@enxoval/testing';
 import { TestDataSource } from './helpers/data-source';
 
-vi.mock('../../src/db/data-source', () => ({ AppDataSource: TestDataSource }));
-vi.mock('@enxoval/auth', () => ({ setupAuth: vi.fn() }));
+test.mock('../../src/db/data-source', () => ({ AppDataSource: TestDataSource }));
+test.mock('@enxoval/auth', () => ({ setupAuth: test.fn() }));
 test.mock(import('@enxoval/messaging'), async (importOriginal) => {
   const actual = await importOriginal();
   return { ...actual, publish: test.fn(), publishRaw: test.fn(), connect: test.fn(), disconnect: test.fn() };
