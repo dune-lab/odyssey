@@ -6,7 +6,7 @@ import { checkHealth } from './health/index';
 import { openApiSpec } from './docs/openapi';
 
 export function buildApp(): void {
-  setupAuth({ exclude: ['/health', '/docs', '/journeys/:journeyId/stream'] });
+  setupAuth({ exclude: ['/health', '/docs', '/routes', '/contracts', '/journeys/:journeyId/stream'] });
   get('/health', () => checkHealth());
   html('/docs', async () => renderApiDocs(openApiSpec));
   setupRoutes();
