@@ -71,12 +71,12 @@ export function registerJourneyRoutes(): void {
     const input = StartJourneyWireIn.parse(body);
     const journey = await startJourney(input);
     return { ...toWireOut(journey), events: [] };
-  });
+  }, { in: { schema: StartJourneyWireIn, name: 'StartJourneyWireIn' }, out: { schema: JourneyWireOut, name: 'JourneyWireOut' } });
 
   getWith<{ studentId: string }>('/journeys/by-student/:studentId', async ({ studentId }) => {
     const journey = await journeyDb.findByStudentId(studentId);
     if (!journey) throw new NotFoundError(`Journey for student ${studentId} not found`);
     const events = await fetchEvents({ journeyId: journey.id });
     return { ...toWireOut(journey), events };
-  });
+  }, { in: null, out: { schema: JourneyWireOut, name: 'JourneyWireOut' } });
 }

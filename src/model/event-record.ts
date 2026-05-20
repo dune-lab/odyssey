@@ -1,12 +1,12 @@
 import { createSchema, field } from '@enxoval/types';
 
 export const EventRecord = createSchema({
-  id: field.uuid(),
+  id:        field.uuid(),
   journeyId: field.uuid(),
   createdAt: field.date(),
 });
 
 export const EventRecordInput = createSchema({
-  id: field.uuid(),
+  id:        field.uuid(),
   journeyId: field.uuid(),
 });

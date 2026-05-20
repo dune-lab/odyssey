@@ -1,4 +1,5 @@
 import { get } from '@enxoval/http';
+import { JourneyWireOut } from '../../wire/out/journey';
 import * as journeyDb from '../../db/journey';
 import * as journeyInitiatedDb from '../../db/journey-initiated';
 import * as diagnosticTriggeredDb from '../../db/diagnostic-triggered';
@@ -53,5 +54,5 @@ export function registerJourneysListRoutes(): void {
       createdAt: journey.createdAt.toISOString(),
       events: eventsByJourney.get(journey.id) ?? [],
     }));
-  });
+  }, { in: null, out: { schema: JourneyWireOut, name: 'JourneyWireOut' } });
 }

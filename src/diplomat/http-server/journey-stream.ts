@@ -14,5 +14,6 @@ export function registerJourneyStreamRoute(): void {
         });
       });
     },
+    { in: null, out: null },
   );
 }
