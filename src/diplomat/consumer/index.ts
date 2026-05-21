@@ -16,13 +16,13 @@ const handle = (controller: (raw: unknown) => Promise<void>) =>
   asyncFn(EventWireIn, async (wire) => controller(toModel(wire)));
 
 export function setupConsumers(): void {
-  consume('journeyInitiated', handle(journeyStarted));
-  consume('diagnosticTriggered', handle(diagnosticTriggered));
-  consume('diagnosticCompleted', handle(diagnosticCompleted));
-  consume('analysisStarted', handle(analysisStarted));
-  consume('analysisFinished', handle(analysisFinished));
-  consume('curriculumGenerated', handle(curriculumGenerated));
-  consume('contentDispatched', handle(contentDispatched));
-  consume('studentEngagementReceived', handle(studentEngagementReceived));
-  consume('progressMilestoneReached', handle(progressMilestoneReached));
+  consume('journeyInitiated',          handle(journeyStarted),           { schema: EventWireIn, name: 'EventWireIn' });
+  consume('diagnosticTriggered',       handle(diagnosticTriggered),      { schema: EventWireIn, name: 'EventWireIn' });
+  consume('diagnosticCompleted',       handle(diagnosticCompleted),      { schema: EventWireIn, name: 'EventWireIn' });
+  consume('analysisStarted',           handle(analysisStarted),          { schema: EventWireIn, name: 'EventWireIn' });
+  consume('analysisFinished',          handle(analysisFinished),         { schema: EventWireIn, name: 'EventWireIn' });
+  consume('curriculumGenerated',       handle(curriculumGenerated),      { schema: EventWireIn, name: 'EventWireIn' });
+  consume('contentDispatched',         handle(contentDispatched),        { schema: EventWireIn, name: 'EventWireIn' });
+  consume('studentEngagementReceived', handle(studentEngagementReceived),{ schema: EventWireIn, name: 'EventWireIn' });
+  consume('progressMilestoneReached',  handle(progressMilestoneReached), { schema: EventWireIn, name: 'EventWireIn' });
 }
