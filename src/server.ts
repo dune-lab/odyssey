@@ -3,6 +3,7 @@ import { listen, close } from '@enxoval/http';
 import { connect, disconnect, ensureTopics } from '@enxoval/messaging';
 import { buildApp } from './app';
 import { setupConsumers } from './diplomat/consumer/index';
+import { setupProducers } from './diplomat/producer/index';
 
 const PORT = Number(process.env.PORT) || 3001;
 const HOST = process.env.HOST || '0.0.0.0';
@@ -24,6 +25,7 @@ listen(PORT, HOST, async () => {
   await AppDataSource.runMigrations();
   await ensureTopics();
   await connect();
+  setupProducers();
   setupConsumers();
 }).catch((err) => {
   console.error('Failed to start:', err);
