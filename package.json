@@ -19,8 +19,8 @@
   "dependencies": {
     "@enxoval/auth": "^1.0.3",
     "@enxoval/db": "^1.0.3",
-    "@enxoval/http": "^1.0.30",
-    "@enxoval/messaging": "^1.0.6",
+    "@enxoval/http": "^1.0.31",
+    "@enxoval/messaging": "^1.0.7",
     "@enxoval/observability": "^1.0.3",
     "@enxoval/types": "^1.0.25"
   },
